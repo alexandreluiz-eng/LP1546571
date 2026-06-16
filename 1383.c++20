@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+bool verifica(int m[9][9]) {
+    int freq[10];
+
+    // Verificar linhas
+    for (int i = 0; i < 9; i++) {
+        for (int k = 1; k <= 9; k++) freq[k] = 0;
+
+        for (int j = 0; j < 9; j++) {
+            freq[m[i][j]]++;
+        }
+
+        for (int k = 1; k <= 9; k++) {
+            if (freq[k] != 1) return false;
+        }
+    }
+
+    // Verificar colunas
+    for (int j = 0; j < 9; j++) {
+        for (int k = 1; k <= 9; k++) freq[k] = 0;
+
+        for (int i = 0; i < 9; i++) {
+            freq[m[i][j]]++;
+        }
+
+        for (int k = 1; k <= 9; k++) {
+            if (freq[k] != 1) return false;
+        }
+    }
+
+    // Verificar blocos 3x3
+    for (int li = 0; li < 9; li += 3) {
+        for (int cj = 0; cj < 9; cj += 3) {
+
+            for (int k = 1; k <= 9; k++) freq[k] = 0;
+
+            for (int i = li; i < li + 3; i++) {
+                for (int j = cj; j < cj + 3; j++) {
+                    freq[m[i][j]]++;
+                }
+            }
+
+            for (int k = 1; k <= 9; k++) {
+                if (freq[k] != 1) return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    for (int inst = 1; inst <= n; inst++) {
+        int m[9][9];
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                cin >> m[i][j];
+            }
+        }
+
+        cout << "Instancia " << inst << "\n";
+
+        if (verifica(m))
+            cout << "SIM\n\n";
+        else
+            cout << "NAO\n\n";
+    }
+
+    return 0;
+}
